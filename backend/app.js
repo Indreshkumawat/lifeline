@@ -14,7 +14,7 @@ app.use(express.json());
 app.use(
 	cors({
 		origin: [
-			"http://localhost:3000","https://lifeline-1.onrender.com",
+			"https://lifeline-1.onrender.com","http://localhost:3000",
 		],
 		credentials: true,
 	})
