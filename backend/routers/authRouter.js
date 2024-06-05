@@ -48,6 +48,7 @@ router.post("/:handle", async (req, res) => {
 router.post("/login/:handle", async (req, res) => {
     try {
         const { phone, password } = req.body;
+        console.log(phone + " " +password)
         const handle = req.params.handle;
         const existingUser = await (handle == "bank" ? BloodBank.findOne({ phone: phone }) : User.findOne({ phone: phone }));
         if (!existingUser)

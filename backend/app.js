@@ -11,15 +11,42 @@ dotenv.config();
 
 app.use(cookieParser());
 app.use(express.json());
+// app.use(
+// 	cors({
+// 		origin: [
+// 			"https://lifeline-1.onrender.com",
+// 			"http://localhost:3000",
+// 		],
+// 		credentials: true,
+// 	})
+// );
+const allowedOrigins = [
+    "http://localhost:3000",
+	"https://lifeline-1.onrender.com",
+
+];
 app.use(
-	cors({
-		origin: [
-			//"https://lifeline-1.onrender.com",
-			"http://localhost:3000",
-		],
-		credentials: true,
-	})
-);
+	(req, res, next) => {
+		console.log("Credentials")
+	
+		const origin = req.headers.origin;
+	
+		if (allowedOrigins.includes(origin)) {
+			console.log("allowed")
+			res.header('Access-Control-Allow-Credentials', true);
+		}
+		next();
+	}
+)
+app.use(cors({origin: [
+				"https://lifeline-1.onrender.com",
+				"http://localhost:3000",
+			],
+optionsSuccessStatus: 200,
+preflightContinue: false,
+methods: "GET,POST,OPTIONS",
+credentials: true}))
+
 
 
 mongoose.connect(process.env.CONNECT, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true }, (e) => {
